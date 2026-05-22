@@ -9,7 +9,7 @@ It is built in **Elixir / OTP** — a supervised tree of GenServers connected by
 `Phoenix.PubSub` — the model that makes soft-real-time systems on the BEAM
 straightforward.
 
-**Live demo:** https://relay-access-events.fly.dev
+**Live demo:** https://relay-access-events.onrender.com
 
 ---
 
@@ -77,7 +77,7 @@ and a ring buffer, which is the right tool for a live event feed.
 - **Phoenix 1.8** + **Phoenix LiveView 1.1**
 - **Phoenix.PubSub** for the broadcast fan-out
 - **Bandit** HTTP server · **Tailwind CSS v4**
-- Deployed on **Fly.io** as an OTP release
+- Deployed on **Render** as a Dockerised OTP release
 
 ---
 
@@ -119,15 +119,15 @@ to freeze the generator and **Inject burst** to fire a spike of ten events
 ## Deployment
 
 Relay ships as an OTP release in a multi-stage Docker image and runs on
-[Fly.io](https://fly.io):
+[Render](https://render.com). The repo includes a `render.yaml` Blueprint, so a
+deploy is just *New → Blueprint → pick the repo → Apply*.
 
-```bash
-fly launch       # or: fly deploy --remote-only
-```
+`config/runtime.exs` reads `SECRET_KEY_BASE` and `PORT` at boot and uses
+`RENDER_EXTERNAL_HOSTNAME` for the canonical URL; the release is started by
+`bin/server`. The image is built on Render's builders — no local Docker needed.
 
-`config/runtime.exs` reads `SECRET_KEY_BASE`, `PHX_HOST` and `PORT` at boot;
-the release is started by `bin/server`. The Docker image is built on Fly's
-remote builder, so no local Docker is needed.
+The `Dockerfile` is host-agnostic, so the same image runs on Fly.io, a VPS, or
+any container platform.
 
 ---
 

@@ -1,0 +1,15 @@
+# Render Blueprint — deploys Relay as a Docker web service on the
+# free instance type. Render injects PORT and RENDER_EXTERNAL_HOSTNAME
+# automatically; SECRET_KEY_BASE is generated on first deploy.
+services:
+  - type: web
+    name: relay-access-events
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    region: oregon
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      - key: SECRET_KEY_BASE
+        generateValue: true

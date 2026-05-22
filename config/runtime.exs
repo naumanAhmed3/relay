@@ -35,7 +35,11 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
-  host = System.get_env("PHX_HOST") || "example.com"
+  # Render injects RENDER_EXTERNAL_HOSTNAME with the live service host;
+  # fall back to PHX_HOST for other deploy targets.
+  host =
+    System.get_env("RENDER_EXTERNAL_HOSTNAME") ||
+      System.get_env("PHX_HOST") || "example.com"
 
   config :relay, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
 
