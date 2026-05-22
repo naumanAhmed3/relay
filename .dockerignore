@@ -1,0 +1,17 @@
+_build/
+deps/
+*.tar
+
+# generated on the host during dev
+priv/static/assets/
+priv/static/cache_manifest.json
+
+# misc
+.git/
+.github/
+.elixir_ls/
+.fetch
+erl_crash.dump
+test/
+README.md
+fly.toml
